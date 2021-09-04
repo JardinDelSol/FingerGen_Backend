@@ -1,0 +1,3 @@
+[submodule "fake_finger_gen/fake_finger_gen/Fake_Fingerprint_Generation"]
+	path = fake_finger_gen/fake_finger_gen/Fake_Fingerprint_Generation
+	url = git@github.com:CUAI-CAU/Fake_Fingerprint_Generation.git
