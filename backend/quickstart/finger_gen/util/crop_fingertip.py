@@ -58,7 +58,6 @@ def get_fingertip(base_dir, save_dir=None):
         images = {dir.split("/")[-1]: cv2.imread(dir) for dir in img_list}
     else:
         images = {base_dir.split("/")[-1]: cv2.imread(base_dir)}
-        print(images)
     for name, image in images.items():
         # Convert the BGR image to RGB, flip the image around y-axis for correct
         # handedness output and process it with MediaPipe Hands.

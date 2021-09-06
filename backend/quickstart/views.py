@@ -26,7 +26,7 @@ class FakeFingerprintAPIView(APIView):
         self.base_dir = os.getcwd()
 
     def post(self, request):
-        print(request.data)
+        # print(request.data)
         file_serializer = ImageSerializer(data=request.data)
 
         if file_serializer.is_valid():
@@ -34,27 +34,22 @@ class FakeFingerprintAPIView(APIView):
             img_dir = file_serializer.data["file"]
 
             img_dir = self.base_dir + img_dir
-            print(img_dir)
-            print(img_dir)
-            print(img_dir)
-            print(img_dir)
-            print(img_dir)
             out_dir = self.base_dir + "/modified.jpg"
             run(img_dir, out_dir)
 
-            print(out_dir)
+            # img64 = convert2base64(out_dir)
 
-            # print(os.getcwd())
-            # img_dir = os.path.join(self.base_dir, img_dir)
+            # print(img64)
+            
+            # return Response(img64)
 
-            # result = generate_finger.run(img_dir)
+            f = open(out_dir, 'rb')
+            byte_im = f.read()
 
-            img64 = convert2base64(out_dir)
-            # result = json.loads(img64)
-            # result = json.dumps({"result": [convert2base64(img_dir)]})
-            # result = json.dumps({"result": result})   
+            print(byte_im)
 
-            return Response(img64)
+            return Response(str(byte_im))
+
 
             # return Response(img64, status=status.HTTP_201_CREATED)
         else:
