@@ -13,6 +13,7 @@ import sys
 from .process import run
 # Create your views here.
 
+sys.path.append(os.getcwd())
 
 def convert2base64(img_dir):
     with open(img_dir, "rb") as image_file:
@@ -22,9 +23,10 @@ def convert2base64(img_dir):
 
 class FakeFingerprintAPIView(APIView):
     def __init__(self):
-        self.base_dir = os.getcwd() + "/backend/"
+        self.base_dir = os.getcwd()
 
     def post(self, request):
+        print(request.data)
         file_serializer = ImageSerializer(data=request.data)
 
         if file_serializer.is_valid():
@@ -37,11 +39,10 @@ class FakeFingerprintAPIView(APIView):
             print(img_dir)
             print(img_dir)
             print(img_dir)
-            out_dir = self.base_dir + "/media/modified.jpg"
+            out_dir = self.base_dir + "/modified.jpg"
             run(img_dir, out_dir)
 
-            # print(img_dir)
-            
+            print(out_dir)
 
             # print(os.getcwd())
             # img_dir = os.path.join(self.base_dir, img_dir)

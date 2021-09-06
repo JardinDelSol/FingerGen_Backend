@@ -59,5 +59,4 @@ def run(img_dir, save_dir):
 
 
 if __name__ == "__main__":
-
-    run(r"C:\Users\rswfa\Documents\GitHub\FingerGen_Backend\backend\media\original.png ", r"C:\Users\rswfa\Documents\GitHub\FingerGen_Backend\backend\media\modified.jpg")
+    pass
