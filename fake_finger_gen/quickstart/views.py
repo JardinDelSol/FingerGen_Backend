@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 import base64
-from Fake_Fingerprint_Generation import test as generate_finger
+# from Fake_Fingerprint_Generation import test as generate_finger
 import cv2
 import numpy as np
 import os
@@ -36,10 +36,15 @@ class FakeFingerprintAPIView(APIView):
             out_dir = self.base_dir + "/media"
             # img_dir = os.path.join(self.base_dir, img_dir)
 
-            result = generate_finger.run(img_dir)
+            # result = generate_finger.run(img_dir)
 
-            # result = json.dumps({"result": convert2base64(img_dir)})
+            img64 = convert2base64(img_dir)
+            # result = json.loads(img64)
+            # result = json.dumps({"result": [convert2base64(img_dir)]})
+            # result = json.dumps({"result": result})   
 
-            return Response(result, status=status.HTTP_201_CREATED)
+            return Response(img64)
+
+            # return Response(img64, status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
