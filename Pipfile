@@ -13,6 +13,7 @@ requests = "==2.26.0"
 bson = "==0.5.10"
 Django = "==3.1.12"
 opencv-python = "*"
+imageio = "*"
 
 [dev-packages]
 

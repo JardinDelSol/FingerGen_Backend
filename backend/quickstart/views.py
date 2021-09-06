@@ -32,7 +32,9 @@ class FakeFingerprintAPIView(APIView):
             img_dir = file_serializer.data["file"]
 
             img_dir = self.base_dir + img_dir
-            out_dir = self.base_dir + "/media"
+            out_dir = self.base_dir + "/media/modified.jpg"
+
+            print(img_dir)
             
             print(os.getcwd())
             # img_dir = os.path.join(self.base_dir, img_dir)

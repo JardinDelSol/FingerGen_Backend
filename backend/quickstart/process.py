@@ -8,7 +8,8 @@ from finger_gen.util import preprocessing
 # from finger_gen.edge_connect import main as generate_finger
 
 
-def run(img_dir, test_dir, save_dir):
+def run(img_dir, save_dir):
+    test_dir = "/".join(img_dir.split("/")[:-1])
     finger_tips = crop_fingertip.get_fingertip(img_dir)
 
     if os.path.isfile(img_dir):
@@ -36,12 +37,12 @@ def run(img_dir, test_dir, save_dir):
             cv2.imwrite(os.path.join(test_dir, "mask.png"), mask)
             cv2.imwrite(os.path.join(test_dir, "edge.png"), enhanced)
             
-            command = "python edge_connect/test.py --model 2 --checkpoints ../finger_gen/edge-connect/checkpoints  --input {test_dir}/{img_name}  --mask {test_dir}/mask.png --edge {test_dir}/edge.png  --output {output_dir}".format(
+            command = "python backend/quickstart/finger_gen/edge_connect/test.py --model 2 --checkpoints backend/quickstart/pipfinger_gen/edge-connect/checkpoints  --input {test_dir}/{img_name}  --mask {test_dir}/mask.png --edge {test_dir}/edge.png  --output {output_dir}".format(
                 output_dir=test_dir, img_name=img_name, test_dir=test_dir
             )
             os.system(command)
 
-            changed = cv2.imread(os.path.join(test_dir, img_name))
+            changed = cv2.imread(os.path.join(test_dir  , img_name))
 
             changed = cv2.resize(
                 changed, (down_right[1] - top_left[1], down_right[0] - top_left[0])
@@ -59,4 +60,4 @@ def run(img_dir, test_dir, save_dir):
 
 if __name__ == "__main__":
 
-    run(r"C:\Users\rswfa\Documents\GitHub\FingerGen_Backend\backend\media\modified.png ",r"C:\Users\rswfa\Documents\GitHub\FingerGen_Backend\backend\media", r"C:\Users\rswfa\Documents\GitHub\FingerGen_Backend\backend\media\hohoho")
+    run(r"C:\Users\rswfa\Documents\GitHub\FingerGen_Backend\backend\media\original.png ", r"C:\Users\rswfa\Documents\GitHub\FingerGen_Backend\backend\media\modified.jpg")
