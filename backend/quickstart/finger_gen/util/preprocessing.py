@@ -81,9 +81,11 @@ def Enhancement(fingerprint, mask):
     gxy2 = 2 * gxy
 
     orientations = (cv2.phase(gxx_gyy, -gxy2) + np.pi) / 2 # '-' to adjust for y axis direction
-    
 
-    region = fingerprint[80:180,80:180]
+    width_min, width_max = int(fingerprint.shape[1] * 0.3), int(fingerprint.shape[1] * 0.7)
+    height_min, height_max = int(fingerprint.shape[0] * 0.3), int(fingerprint.shape[0] * 0.7)
+
+    region = fingerprint[height_min:height_max, width_min:width_max]    
 
     # before computing the x-signature, the region is smoothed to reduce noise
     smoothed = cv2.blur(region, (5,5), -1)

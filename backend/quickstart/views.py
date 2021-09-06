@@ -50,7 +50,6 @@ class FakeFingerprintAPIView(APIView):
 
             return Response(str(byte_im))
 
-
             # return Response(img64, status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
