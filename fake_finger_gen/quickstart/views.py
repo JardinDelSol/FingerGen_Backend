@@ -5,7 +5,12 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 import base64
-from Fake_Fingerprint_Generation
+from Fake_Fingerprint_Generation import test as generate_finger
+import cv2
+import numpy as np
+import os
+import json
+import sys
 
 # Create your views here.
 
@@ -17,10 +22,24 @@ def convert2base64(img_dir):
 
 
 class FakeFingerprintAPIView(APIView):
+    def __init__(self):
+        self.base_dir = os.getcwd()
+
     def post(self, request):
         file_serializer = ImageSerializer(data=request.data)
+
         if file_serializer.is_valid():
             file_serializer.save()
-            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+            img_dir = file_serializer.data["file"]
+
+            img_dir = self.base_dir + img_dir
+            out_dir = self.base_dir + "/media"
+            # img_dir = os.path.join(self.base_dir, img_dir)
+
+            result = generate_finger.run(img_dir)
+
+            # result = json.dumps({"result": convert2base64(img_dir)})
+
+            return Response(result, status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

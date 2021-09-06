@@ -6,5 +6,5 @@ from django.db import models
 class HandImage(models.Model):
     # image = models.CharField(max_length=200)
     file = models.FileField(blank=False, null=False)
-    # description = models.CharField(max_lenth=255)
+    name = models.CharField(max_length=255, default="img.jpg")
     uploaded_at = models.DateTimeField(auto_now_add=True)
