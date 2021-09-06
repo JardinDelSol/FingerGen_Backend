@@ -3,8 +3,8 @@ import cv2
 import glob
 import sys
 import numpy as np
-from finger_gen.util import crop_fingertip
-from finger_gen.util import preprocessing
+from quickstart.finger_gen.util import crop_fingertip
+from quickstart.finger_gen.util import preprocessing
 # from finger_gen.edge_connect import main as generate_finger
 
 

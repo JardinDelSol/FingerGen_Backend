@@ -10,7 +10,7 @@ import numpy as np
 import os
 import json
 import sys
-
+from .process import run
 # Create your views here.
 
 
@@ -22,7 +22,7 @@ def convert2base64(img_dir):
 
 class FakeFingerprintAPIView(APIView):
     def __init__(self):
-        self.base_dir = os.getcwd()
+        self.base_dir = os.getcwd() + "/backend/"
 
     def post(self, request):
         file_serializer = ImageSerializer(data=request.data)
@@ -32,16 +32,23 @@ class FakeFingerprintAPIView(APIView):
             img_dir = file_serializer.data["file"]
 
             img_dir = self.base_dir + img_dir
-            out_dir = self.base_dir + "/media/modified.jpg"
-
             print(img_dir)
+            print(img_dir)
+            print(img_dir)
+            print(img_dir)
+            print(img_dir)
+            out_dir = self.base_dir + "/media/modified.jpg"
+            run(img_dir, out_dir)
+
+            # print(img_dir)
             
-            print(os.getcwd())
+
+            # print(os.getcwd())
             # img_dir = os.path.join(self.base_dir, img_dir)
 
             # result = generate_finger.run(img_dir)
 
-            img64 = convert2base64(img_dir)
+            img64 = convert2base64(out_dir)
             # result = json.loads(img64)
             # result = json.dumps({"result": [convert2base64(img_dir)]})
             # result = json.dumps({"result": result})   
