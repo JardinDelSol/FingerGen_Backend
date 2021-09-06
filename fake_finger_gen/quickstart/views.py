@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 import base64
-# from Fake_Fingerprint_Generation import test as generate_finger
+# from finger_gen.edge_connect import main as generate_finger
 import cv2
 import numpy as np
 import os
