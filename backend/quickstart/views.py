@@ -11,9 +11,11 @@ import os
 import json
 import sys
 from .process import run
+
 # Create your views here.
 
 sys.path.append(os.getcwd())
+
 
 def convert2base64(img_dir):
     with open(img_dir, "rb") as image_file:
@@ -40,13 +42,13 @@ class FakeFingerprintAPIView(APIView):
             # img64 = convert2base64(out_dir)
 
             # print(img64)
-            
+
             # return Response(img64)
 
-            f = open(out_dir, 'rb')
+            f = open(out_dir, "rb")
             byte_im = f.read()
 
-            print(byte_im)
+            # print(byte_im)
 
             return Response(str(byte_im))
 

@@ -7,9 +7,11 @@ import argparse
 from shutil import copyfile
 from src.config import Config
 from src.edge_connect import EdgeConnect
+import sys
 
 
 def main(mode=2):
+    sys.path.append(os.getcwd())
     r"""starts the model
 
     Args:
@@ -18,23 +20,18 @@ def main(mode=2):
 
     config = load_config(mode)
 
-
     # cuda visble devices
-    os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(str(e) for e in config.GPU)
-
+    os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(str(e) for e in config.GPU)
 
     # init device
     if torch.cuda.is_available():
         config.DEVICE = torch.device("cuda")
-        torch.backends.cudnn.benchmark = True   # cudnn auto-tuner
+        torch.backends.cudnn.benchmark = True  # cudnn auto-tuner
     else:
         config.DEVICE = torch.device("cpu")
 
-
-
     # set cv2 running threads to 1 (prevents deadlocks with pytorch dataloader)
     cv2.setNumThreads(0)
-
 
     # initialize random seed
     torch.manual_seed(config.SEED)
@@ -42,14 +39,11 @@ def main(mode=2):
     np.random.seed(config.SEED)
     random.seed(config.SEED)
 
-
-
     # build the model and initialize
     model = EdgeConnect(config)
     model.load()
 
-
-    print('\nstart testing...\n')
+    print("\nstart testing...\n")
     model.test()
 
 
@@ -61,18 +55,38 @@ def load_config(mode=None):
     """
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--path', '--checkpoints', type=str, default= os.path.join(os.getcwd(), '/checkpoints'), help='model checkpoints path (default: ./checkpoints)')
-    parser.add_argument('--model', type=int, choices=[1, 2, 3, 4], default = 2, help='1: edge model, 2: inpaint model, 3: edge-inpaint model, 4: joint model')
+    parser.add_argument(
+        "--path",
+        "--checkpoints",
+        type=str,
+        default=os.path.join(os.getcwd(), "/checkpoints"),
+        help="model checkpoints path (default: checkpoints)",
+    )
+    parser.add_argument(
+        "--model",
+        type=int,
+        choices=[1, 2, 3, 4],
+        default=2,
+        help="1: edge model, 2: inpaint model, 3: edge-inpaint model, 4: joint model",
+    )
 
     # test mode
     if mode == 2:
-        parser.add_argument('--input', type=str, help='path to the input images directory or an input image')
-        parser.add_argument('--mask', type=str, help='path to the masks directory or a mask file')
-        parser.add_argument('--edge', type=str, help='path to the edges directory or an edge file')
-        parser.add_argument('--output', type=str, help='path to the output directory')
+        parser.add_argument(
+            "--input",
+            type=str,
+            help="path to the input images directory or an input image",
+        )
+        parser.add_argument(
+            "--mask", type=str, help="path to the masks directory or a mask file"
+        )
+        parser.add_argument(
+            "--edge", type=str, help="path to the edges directory or an edge file"
+        )
+        parser.add_argument("--output", type=str, help="path to the output directory")
 
     args = parser.parse_args()
-    config_path = os.path.join(args.path, 'config.yml')
+    config_path = os.path.join(args.path, "config.yml")
 
     # create checkpoints path if does't exist
     if not os.path.exists(args.path):
@@ -80,11 +94,18 @@ def load_config(mode=None):
 
     # copy config template if does't exist
     if not os.path.exists(config_path):
-        copyfile('./config.yml.example', config_path)
+        print(config_path)
+        print(config_path)
+        print(config_path)
+        copyfile(
+            os.path.join(
+                os.getcwd(), "quickstart/edge_connect/checkpoints/config.yml.example"
+            ),
+            config_path,
+        )
 
     # load config file
     config = Config(config_path)
-
 
     # test mode
     config.MODE = 2

@@ -5,10 +5,13 @@ import sys
 import numpy as np
 from quickstart.finger_gen.util import crop_fingertip
 from quickstart.finger_gen.util import preprocessing
+
 # from finger_gen.edge_connect import main as generate_finger
 
 
 def run(img_dir, save_dir):
+    # sys.path.append(os.getcwd())
+
     test_dir = "/".join(img_dir.split("/")[:-1])
     finger_tips = crop_fingertip.get_fingertip(img_dir)
 
@@ -28,21 +31,36 @@ def run(img_dir, save_dir):
             img = cv2.resize(img, (256, 256))
 
             finger, mask = preprocessing.get_mask(img, 0.9)
-            edge =  preprocessing.extract_edge(finger)
-            enhanced =  preprocessing.Enhancement(edge, mask)
+            edge = preprocessing.extract_edge(finger)
+            enhanced = preprocessing.Enhancement(edge, mask)
 
             img_name = "img.png"
 
             cv2.imwrite(os.path.join(test_dir, "img.png"), img)
             cv2.imwrite(os.path.join(test_dir, "mask.png"), mask)
             cv2.imwrite(os.path.join(test_dir, "edge.png"), enhanced)
-            
-            command = "python backend/quickstart/finger_gen/edge_connect/test.py --model 2 --checkpoints backend/quickstart/pipfinger_gen/edge-connect/checkpoints  --input {test_dir}/{img_name}  --mask {test_dir}/mask.png --edge {test_dir}/edge.png  --output {output_dir}".format(
-                output_dir=test_dir, img_name=img_name, test_dir=test_dir
-            )
-            os.system(command)
 
-            changed = cv2.imread(os.path.join(test_dir  , img_name))
+            testfile = os.path.join(
+                os.getcwd(), "quickstart/finger_gen/edge_connect/test.py"
+            )
+
+            checkpoints = os.path.join(
+                os.getcwd(), "quickstart/finger_gen/edge_connect/checkpoints"
+            )
+
+            command = "python {testfile} --model 2 --checkpoints {checkpoints}  --input {test_dir}/{img_name}  --mask {test_dir}/mask.png --edge {test_dir}/edge.png  --output {output_dir}".format(
+                testfile=testfile,
+                checkpoints=checkpoints,
+                output_dir=test_dir,
+                img_name=img_name,
+                test_dir=test_dir,
+            )
+
+            print("start")
+            os.system(command)
+            print("end")
+
+            changed = cv2.imread(os.path.join(test_dir, img_name))
 
             changed = cv2.resize(
                 changed, (down_right[1] - top_left[1], down_right[0] - top_left[0])
