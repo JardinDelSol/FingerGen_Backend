@@ -39,11 +39,11 @@ class FakeFingerprintAPIView(APIView):
             img_dir = self.base_dir + img_dir
             out_dir = self.base_dir + "/modified.jpg"
 
-            # run(img_dir, out_dir)
+            run(img_dir, out_dir)
 
             img64 = convert2base64(out_dir)
 
-            print(img64)
+            # print(img64)
 
             return HttpResponse(content=img64)
 
