@@ -43,29 +43,7 @@ class FakeFingerprintAPIView(APIView):
 
             img64 = convert2base64(out_dir)
 
-            # print(img64)
-
             return HttpResponse(content=img64)
 
-            # print(img64)
-
-            # return Response(img64)
-
-            # f = open(out_dir, "rb")
-            # byte_im = f.read()
-
-            f = open(img_dir, "rb")
-            byte_im = f.read()
-
-            # print(byte_im[10])
-            # print(byte_im[11:20])
-
-            byte_im = bytearray("abc".encode())
-
-            # return Response(data=str(byte_im))
-            print(str(byte_im))
-            return HttpResponse(byte_im, content_type="application/octet-stream")
-
-            # return Response(img64, status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

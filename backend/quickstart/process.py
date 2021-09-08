@@ -70,6 +70,7 @@ def run(img_dir, save_dir):
                 top_left[1] : down_right[1], top_left[0] : down_right[0]
             ] = changed
 
+        original_img = cv2.flip(original_img, 1)
         cv2.imwrite(
             save_dir,
             original_img,
