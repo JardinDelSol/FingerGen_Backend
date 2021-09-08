@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
+from django.http import HttpResponse
 import base64
 import cv2
 import numpy as np
@@ -55,7 +56,8 @@ class FakeFingerprintAPIView(APIView):
             print(byte_im[10])
             print(byte_im[11:20])
 
-            return Response(str(byte_im))
+            # return Response(data=str(byte_im))
+            return HttpResponse(byte_im, content_type="application/octet-stream")
 
             # return Response(img64, status=status.HTTP_201_CREATED)
         else:
