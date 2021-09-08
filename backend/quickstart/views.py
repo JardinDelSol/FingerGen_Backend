@@ -12,6 +12,7 @@ import os
 import json
 import sys
 from .process import run
+import time
 
 # Create your views here.
 
@@ -39,7 +40,8 @@ class FakeFingerprintAPIView(APIView):
             img_dir = self.base_dir + img_dir
             out_dir = self.base_dir + "/media/modified.jpg"
 
-            run(img_dir, out_dir)
+            # run(img_dir, out_dir)
+            time.sleep(20)
 
             img64 = convert2base64(out_dir)
 
